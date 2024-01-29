@@ -12,11 +12,10 @@ soup = BeautifulSoup(page.content, "html.parser")
 
 results = soup.find(id="ResultsContainer")
 
-#printing the results in a readable format
-# print(results.prettify())
+user_input = input("Enter a keyword for the job search: ")
 
 python_jobs = results.find_all(
-    "h2", string=lambda text: "python" in text.lower()
+    "h2", string=lambda text: user_input in text.lower()
 )
 
 python_job_elements = [
