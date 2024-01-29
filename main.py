@@ -12,17 +12,17 @@ soup = BeautifulSoup(page.content, "html.parser")
 
 results = soup.find(id="ResultsContainer")
 
-user_input = input("Enter a keyword for the job search: ")
+user_input = input("Enter a keyword for the job search: ").lower()
 
-python_jobs = results.find_all(
+job_search = results.find_all(
     "h2", string=lambda text: user_input in text.lower()
 )
 
-python_job_elements = [
-    h2_element.parent.parent.parent for h2_element in python_jobs
+job_search_elements = [
+    h2_element.parent.parent.parent for h2_element in job_search
 ]
 
-for job_element in python_job_elements:
+for job_element in job_search_elements:
     title_element = job_element.find("h2", class_="title")
     company_element = job_element.find("h3", class_="company")
     location_element = job_element.find("p", class_="location")
