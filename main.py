@@ -3,23 +3,25 @@ import requests
 from bs4 import BeautifulSoup
 
 #reference the source page
-source = "https://realpython.github.io/fake-jobs/"
+source = "https://www.indeed.com"
 page = requests.get(source)
 
 #creating a variable that is the contents of the page, parsed
 soup = BeautifulSoup(page.content, "html.parser")
 
+#finding the id in HMTL of the results
+results = soup.find(id="jobsearch-main")
 
-results = soup.find(id="ResultsContainer")
-
+#prompt to ask for search criteria
 user_input = input("Enter a keyword for the job search: ").lower()
 
+#the search portion itself
 job_search = results.find_all(
     "h2", string=lambda text: user_input in text.lower()
 )
 
 job_search_elements = [
-    h2_element.parent.parent.parent for h2_element in job_search
+    h2_element.parent.parent for h2_element in job_search
 ]
 
 if len(job_search_elements) == 0:
